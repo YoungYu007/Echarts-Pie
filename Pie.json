@@ -1,0 +1,167 @@
+{
+  "name": "饼图（渐变、灰色背景、自适应）",
+  "serieData": [
+    {
+      "name": "直接访问",
+      "value": 20150
+    },
+    {
+      "name": "邮件营销",
+      "value": 6800.00
+    },
+    {
+      "name": "联盟广告",
+      "value": 10000
+    },
+    {
+      "name": "视频广告",
+      "value": 7000
+    }
+  ],
+  "itemStyle": [
+    {
+      "type": "linear",
+      "x": 0,
+      "y": 0,
+      "x2": 0,
+      "y2": 1,
+      "colorStops": [
+        {
+          "offset": 0,
+          "color": "#15f1a9"
+        },
+        {
+          "offset": 0.1,
+          "color": "#13eea2"
+        },
+        {
+          "offset": 0.2,
+          "color": "#11eb99"
+        },
+        {
+          "offset": 0.3,
+          "color": "#0ee68e"
+        },
+        {
+          "offset": 0.5,
+          "color": "#0ce384"
+        },
+        {
+          "offset": 1,
+          "color": "#0ae07e"
+        }
+      ],
+      "global": false
+    },
+    {
+      "type": "linear",
+      "x": 0,
+      "y": 0,
+      "x2": 0,
+      "y2": 1,
+      "colorStops": [
+        {
+          "offset": 0,
+          "color": "#ca2efc"
+        },
+        {
+          "offset": 0.1,
+          "color": "#c12cfa"
+        },
+        {
+          "offset": 0.2,
+          "color": "#b529f8"
+        },
+        {
+          "offset": 0.3,
+          "color": "#a725f5"
+        },
+        {
+          "offset": 0.5,
+          "color": "#9b22f3"
+        },
+        {
+          "offset": 1,
+          "color": "#9220f1"
+        }
+      ],
+      "global": false
+    },
+    {
+      "type": "linear",
+      "x": 0,
+      "y": 0,
+      "x2": 0,
+      "y2": 1,
+      "colorStops": [
+        {
+          "offset": 0,
+          "color": "#ffc446"
+        },
+        {
+          "offset": 0.1,
+          "color": "#febd41"
+        },
+        {
+          "offset": 0.2,
+          "color": "#fcb33a"
+        },
+        {
+          "offset": 0.3,
+          "color": "#fba832"
+        },
+        {
+          "offset": 0.5,
+          "color": "#f99e2b"
+        },
+        {
+          "offset": 1,
+          "color": "#f89726"
+        }
+      ],
+      "global": false
+    },
+    {
+      "type": "linear",
+      "x": 0,
+      "y": 0,
+      "x2": 0,
+      "y2": 1,
+      "colorStops": [
+        {
+          "offset": 0,
+          "color": "#3093f9"
+        },
+        {
+          "offset": 0.1,
+          "color": "#2e8bf8"
+        },
+        {
+          "offset": 0.2,
+          "color": "#2a7ff7"
+        },
+        {
+          "offset": 0.3,
+          "color": "#2771f5"
+        },
+        {
+          "offset": 0.5,
+          "color": "#2365f4"
+        },
+        {
+          "offset": 1,
+          "color": "#215df3"
+        }
+      ],
+      "global": false
+    }
+  ],
+  "id": "pieChart",
+  "unit": "人次",
+  "legend": [
+    "直接访问",
+    "邮件营销",
+    "联盟广告",
+    "视频广告"
+  ]
+}

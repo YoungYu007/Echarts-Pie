@@ -1,0 +1,205 @@
+<html>
+  <head>
+    <title>Pie</title>
+    <script src="https://cdn.jsdelivr.net/npm/vue"></script>
+    <script src="https://cdn.jsdelivr.net/npm/echarts@4.5.0/dist/echarts.min.js"></script>
+
+    <style>
+      .echarts-wrap {
+        border: 1px solid skyblue;
+        border-radius: 5px;
+        margin: 16px;
+        padding: 16px;
+      }
+    </style>
+  </head>
+
+  <body>
+    <div id="app">
+      <div class="echarts-wrap">
+        <div id="pieChart"></div>
+      </div>
+    </div>
+
+    <script>
+      new Vue({
+        el: '#app',
+        mounted() {
+          this.readTextFile('Pie.json', text => {
+            let pieData = JSON.parse(text)
+            this.$nextTick(() => {
+              this.drawPie(pieData)
+            })
+          })
+        },
+
+        methods: {
+          // 读取文件数据
+          readTextFile(file, callback) {
+            var rawFile = new XMLHttpRequest()
+            rawFile.overrideMimeType('application/json')
+            rawFile.open('GET', file, true)
+            rawFile.onreadystatechange = function() {
+              if (rawFile.readyState === 4 && rawFile.status == '200') {
+                callback(rawFile.responseText)
+              }
+            }
+            rawFile.send(null)
+          },
+
+          // 饼图绘制
+          drawPie(pieData) {
+            let charts = {} // 接收echarts实例
+
+            // 解决 display: none 没有宽高
+            let obj = document.getElementsByClassName('echarts-wrap')[0]
+            let style = null
+
+            if (window.getComputedStyle) {
+              style = window.getComputedStyle(obj, null) // 非IE
+            } else {
+              style = obj.currentStyle // IE
+            }
+
+            let myChartContainer = container => {
+              let width = `calc(${style.width})`
+              container.style.width = `calc(${width})`
+              container.style.height = '660px'
+            }
+
+            // 基于准备好的dom，初始化echarts实例
+            let container = document.getElementById(pieData.id)
+            myChartContainer(container)
+
+            let myChart = echarts.init(container)
+            myChart.clear()
+
+            // 绘制echarts图形
+            myChart.setOption({
+              color: pieData.itemStyle,
+              title: {
+                text: pieData.name,
+                left: 'center',
+                textStyle: {
+                  fontSize: 16,
+                  color: '#333333'
+                }
+              },
+              tooltip: {
+                trigger: 'item',
+                formatter: '{b}<br/>{c}' + pieData.unit + '<br/>占比 : {d}%',
+                backgroundColor: '#22a5fd',
+                borderWidth: 0,
+                padding: [10, 20],
+                fontSize: 14,
+                textStyle: {
+                  color: '#ffffff'
+                },
+                extraCssText: 'box-shadow: 0 0 3px #a2c1f6;'
+                // position: function(pos, params, el, elRect, size) {
+                //   var obj = { top: 10 }
+                //   obj[
+                //     ['left', 'right'][+(pos[0] < size.viewSize[0] / 2)]
+                //   ] = 30
+                //   return obj
+                // }
+              },
+              legend: {
+                orient: 'horizontal',
+                top: 'bottom',
+                bottom: 0,
+                left: 'center',
+                data: pieData.legend,
+                itemWidth: 10,
+                textStyle: {
+                  fontSize: 12,
+                  color: '#666666'
+                },
+                icon: 'circle'
+              },
+              grid: [
+                {
+                  left: 80,
+                  right: 80,
+                  top: 10,
+                  bottom: 80,
+                  containLabel: true
+                }
+              ],
+              series: [
+                {
+                  type: 'pie',
+                  radius: ['30%', '50%'],
+                  center: ['50%', '50%'],
+                  selectedMode: 'single',
+                  data: pieData.serieData,
+                  itemStyle: pieData.itemStyle,
+                  label: {
+                    position: 'outside',
+                    formatter: '{d}%',
+                    color: '#000000',
+                    fontSize: 12,
+                    fontFamily: '方正兰亭中粗黑简体',
+                    distanceToLabelLine: 0,
+                    align: 'right'
+                  },
+                  labelLine: {
+                    show: false,
+                    length: 10,
+                    length2: 0
+                  },
+                  emphasis: {
+                    label: {
+                      color: '#218ced'
+                    }
+                  },
+                  z: 9999
+                },
+
+                // 灰色背景环
+                {
+                  type: 'pie',
+                  radius: ['30%', '58%'],
+                  center: ['50%', '50%'],
+                  selectedMode: false,
+                  hoverAnimation: false,
+                  data: [{ value: 1, name: '' }],
+                  itemStyle: {
+                    color: '#f7f7f7'
+                  },
+                  label: {
+                    show: false
+                  },
+                  labelLine: {
+                    show: false
+                  },
+                  tooltip: {
+                    show: false
+                  },
+                  animation: false,
+                  cursor: 'auto',
+                  emphasis: {
+                    itemStyle: {
+                      color: '#f7f7f7'
+                    }
+                  }
+                }
+              ]
+            })
+
+            charts = { myChart, container, myChartContainer }
+            this.handleOnResize(charts)
+          },
+
+          // onresize
+          handleOnResize(charts) {
+            window.onresize = function() {
+              charts.myChartContainer(charts.container)
+              charts.myChart.resize()
+            }
+          }
+        }
+      })
+    </script>
+  </body>
+</html>
